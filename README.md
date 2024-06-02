@@ -78,7 +78,7 @@ being used in the processor. <br />
  BASIC JUCE OPERATION<br />
  This app is setup in JUCE by creating a basic Plug-In. Once 
  created four files are placed in the SOURCE directory for the 
- project. Replace those four files with the files form this app
+ project. Replace those four files with the files from this app
  and you are ready to go. The files are:
  
  PluginEditor.h  
