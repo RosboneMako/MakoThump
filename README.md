@@ -37,11 +37,12 @@ the tone you are looking for.
 
 MAKO THUMP<br />
 Large speaker cabinets are resonant boxes. They usually create a
-low freq boost around 150 - 200 Hz. Speakers will also being to
+low freq boost around 150 - 200 Hz. Speakers will also begin to
 go into a compression state at very high volumes. To emulate these
 two things, we create a 150 Hz low pass filter and pass it thru a
-distortion stage. By adding Thump and reducing the low bass with
-the EQ, you can tweak a much more lively sound.
+distortion stage. This is then mixed with the original signal.By
+adding Thump and reducing the low bass with the EQ, you can tweak
+a much more lively sound.  
 
 CORE PROCESSING<br />
 The audio process that does the work is called:<br />
