@@ -21,15 +21,18 @@ A Juce/C++ VST3 written to add EQ and bass boost options to guitar.
 This VST adds some useful high gain guitar tools.
 
 LOW PASS FILTER (High Cut)
+
 Most guitars are recorded with 12" speakers. These speakers do not
 reproduce sounds above 5 kHz very well. A hi cut is useful to tame
 the fizz and distortion, by removing the higher frequencies.
 
 5 BAND EQ
+
 There are several EQ setups created. Each one can be used to create
 the tone you are looking for.
 
 MAKO THUMP
+
 Large speaker cabinets are resonant boxes. They usually create a
 low freq boost around 150 - 200 Hz. Speakers will also being to
 go into a compression state at very high volumes. To emulate these
