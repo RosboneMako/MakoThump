@@ -45,14 +45,14 @@ the EQ, you can tweak a much more lively sound.
 
 CORE PROCESSING
 
-The audio process that does the work is called:
+The audio process that does the work is called:<br />
 `float MakoBiteAudioProcessor::Thump_ProcessAudio(float tSample, int channel)`
 
 The editor has basic JUCE slider controls that alter processor
 variables and set a flga that our vars need updated. For this app
 that means our filters need to be recalculated. I do this in the
 processor so the variables are not trying to be changed while
-being used in the processor. 
+being used in the processor. <br />
 
 ` //R1.00 Update our Filters. Gain, Drive, Mix do not need recalc unless you are smoothing the changes.
  Filter_LP_Coeffs(150.0f, &makoF_Thump);
