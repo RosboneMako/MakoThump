@@ -54,7 +54,7 @@ that means our filters need to be recalculated. I do this in the
 processor so the variables are not trying to be changed while
 being used in the processor. <br />
 
-` //R1.00 Update our Filters.`
+` //R1.00 Update our Filters.`  
  `Filter_LP_Coeffs(150.0f, &makoF_Thump);`  
  `Filter_BP_Coeffs(Pedal_Band1, Band1_Freq, Band1_Q, &makoF_Band1);`  
  `Filter_BP_Coeffs(Pedal_Band2, Band2_Freq, Band2_Q, &makoF_Band2);`  
@@ -112,16 +112,16 @@ Parameter defintions in processor:
    std::make_unique<juce::AudioParameterFloat>("gain","Gain", -1.0f, 1.0f, .0f),`  
 
 Parameter Get/Set functions with this code:
-`//R1.00 Save our parameters to file/DAW.  
-auto state = parameters.copyState();  
-std::unique_ptr<juce::XmlElement> xml(state.createXml());  
-copyXmlToBinary(*xml, destData);`  
+`//R1.00 Save our parameters to file/DAW.'    
+`auto state = parameters.copyState();`    
+`std::unique_ptr<juce::XmlElement> xml(state.createXml());`    
+`copyXmlToBinary(*xml, destData);`  
 
- `//R1.00 Read our parameters from file/DAW.  
- std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));  
- if (xmlState.get() != nullptr)  
-     if (xmlState->hasTagName(parameters.state.getType()))  
-         parameters.replaceState(juce::ValueTree::fromXml(*xmlState));`  
+ `//R1.00 Read our parameters from file/DAW.`  
+ `std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));`  
+ `if (xmlState.get() != nullptr)`  
+ `    if (xmlState->hasTagName(parameters.state.getType()))`    
+ `        parameters.replaceState(juce::ValueTree::fromXml(*xmlState));`  
 
 
  
