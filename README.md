@@ -123,12 +123,13 @@ Parameter Get/Set functions with this code:<br />
 `std::unique_ptr<juce::XmlElement> xml(state.createXml());`    
 `copyXmlToBinary(*xml, destData);`  
 
+```C++
  `//R1.00 Read our parameters from file/DAW.`  
  `std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));`  
  `if (xmlState.get() != nullptr)`  
  `    if (xmlState->hasTagName(parameters.state.getType()))`    
  `        parameters.replaceState(juce::ValueTree::fromXml(*xmlState));`  
-
+```
 
  
  
