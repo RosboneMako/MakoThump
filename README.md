@@ -43,8 +43,7 @@ two things, we create a 150 Hz low pass filter and pass it thru a
 distortion stage. By adding Thump and reducing the low bass with
 the EQ, you can tweak a much more lively sound.
 
-`#FFFF00`
-CORE PROCESSING<br />`#FFFFFF`
+CORE PROCESSING<br />
 The audio process that does the work is called:<br />
 `float MakoBiteAudioProcessor::Thump_ProcessAudio(float tSample, int channel)`
 
