@@ -115,7 +115,7 @@ Parameter defintions in processor:
 `parameters(*this, nullptr, "PARAMETERS", {
    std::make_unique<juce::AudioParameterFloat>("gain","Gain", -1.0f, 1.0f, .0f),`  
 
-Parameter Get/Set functions with this code:
+Parameter Get/Set functions with this code:<br />
 `//R1.00 Save our parameters to file/DAW.`    
 `auto state = parameters.copyState();`    
 `std::unique_ptr<juce::XmlElement> xml(state.createXml());`    
