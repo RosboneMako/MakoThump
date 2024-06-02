@@ -88,10 +88,13 @@ being used in the processor. <br />
  PluginProcessor.cpp  
 
  The processor is always running in a DAW. The editor is not.
- It will be loaded and destroyed every time you switch VSTs.<br />
+ It will be loaded and destroyed every time you switch VSTs.
+ These two things may be running on seperate CPU threads.<br />
 
  The editor and processor need to speak to each other. This is done
- thru PUBLIC variables defined in PluginProcessor.h. <br />
+ thru PUBLIC variables defined in PluginProcessor.h. In the
+ editor you use the processor object name to get the values.<br />
+ `audioProcessor.Pedal_Gain`  
 
  A VST should have parameters. These are variables that get
  loaded, saved, and adjusted by the DAW. The magic of JUCE is 
