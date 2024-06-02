@@ -55,16 +55,17 @@ variables and set a flag that our vars need updated. For this app
 that means our filters need to be recalculated. I do this in the
 processor so the variables are not trying to be changed while
 being used in the processor. <br />
+```C++
+//R1.00 Update our Filters.  
+Filter_LP_Coeffs(150.0f, &makoF_Thump);  
+Filter_BP_Coeffs(Pedal_Band1, Band1_Freq, Band1_Q, &makoF_Band1);  
+Filter_BP_Coeffs(Pedal_Band2, Band2_Freq, Band2_Q, &makoF_Band2);  
+Filter_BP_Coeffs(Pedal_Band3, Band3_Freq, Band3_Q, &makoF_Band3);  
+Filter_BP_Coeffs(Pedal_Band4, Band4_Freq, Band4_Q, &makoF_Band4);  
+Filter_BP_Coeffs(Pedal_Band5, Band5_Freq, Band5_Q, &makoF_Band5);  
+Filter_LP_Coeffs(Pedal_LP, &makoF_LP);  
+```
 
-` //R1.00 Update our Filters.`  
- `Filter_LP_Coeffs(150.0f, &makoF_Thump);`  
- `Filter_BP_Coeffs(Pedal_Band1, Band1_Freq, Band1_Q, &makoF_Band1);`  
- `Filter_BP_Coeffs(Pedal_Band2, Band2_Freq, Band2_Q, &makoF_Band2);`  
- `Filter_BP_Coeffs(Pedal_Band3, Band3_Freq, Band3_Q, &makoF_Band3);`  
- `Filter_BP_Coeffs(Pedal_Band4, Band4_Freq, Band4_Q, &makoF_Band4);`  
- `Filter_BP_Coeffs(Pedal_Band5, Band5_Freq, Band5_Q, &makoF_Band5);`  
- `Filter_LP_Coeffs(Pedal_LP, &makoF_LP);`  
- 
  These functions calculate filters using fixed frequencies and
  Qs. The vars Pedal_Bandx are dB volume values adjusted in the 
  editor.
@@ -118,17 +119,17 @@ Parameter defintions in processor:
    std::make_unique<juce::AudioParameterFloat>("gain","Gain", -1.0f, 1.0f, .0f),`  
 
 Parameter Get/Set functions with this code:<br />
-`//R1.00 Save our parameters to file/DAW.`    
-`auto state = parameters.copyState();`    
-`std::unique_ptr<juce::XmlElement> xml(state.createXml());`    
-`copyXmlToBinary(*xml, destData);`  
-
 ```C++
- `//R1.00 Read our parameters from file/DAW.`  
- `std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));`  
- `if (xmlState.get() != nullptr)`  
- `    if (xmlState->hasTagName(parameters.state.getType()))`    
- `        parameters.replaceState(juce::ValueTree::fromXml(*xmlState));`  
+//R1.00 Save our parameters to file/DAW.    
+auto state = parameters.copyState();    
+std::unique_ptr<juce::XmlElement> xml(state.createXml());    
+copyXmlToBinary(*xml, destData);  
+
+//R1.00 Read our parameters from file/DAW.  
+std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));  
+if (xmlState.get() != nullptr)  
+    if (xmlState->hasTagName(parameters.state.getType()))    
+        parameters.replaceState(juce::ValueTree::fromXml(*xmlState));  
 ```
 
  
