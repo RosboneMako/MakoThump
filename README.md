@@ -76,6 +76,7 @@ being used in the processor. <br />
  between -1 and 1. Which are the limits needed for audio programming.
 
  BASIC JUCE OPERATION<br />
+ ![Demo Image](docs/assets/jucesetup01.png)
  This app is setup in JUCE by creating a basic Plug-In. Once 
  created four files are placed in the SOURCE directory for the 
  project. Replace those four files with the files from this app
