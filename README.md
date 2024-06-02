@@ -48,7 +48,7 @@ a much more lively sound.
 
 CORE PROCESSING<br />
 The audio process that does the work is called:<br />
-`float MakoBiteAudioProcessor::Thump_ProcessAudio(float tSample, int channel)`
+```C++float MakoBiteAudioProcessor::Thump_ProcessAudio(float tSample, int channel)```
 
 The editor has basic JUCE slider controls that alter processor
 variables and set a flag that our vars need updated. For this app
@@ -73,7 +73,7 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
  The bulk of this VST is just applying filters. With the exception
  of Thump. Which uses a hypertangent to distort the low signal. 
 
- `tSThump = tanhf(tSThump * Pedal_Thump * 5.0f);`  
+ ```C++tSThump = tanhf(tSThump * Pedal_Thump * 5.0f);```  
 
  tanhf allows you to amplify a signal but keep the peak value
  between -1 and 1. Which are the limits needed for audio programming.
@@ -97,7 +97,7 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
  The editor and processor need to speak to each other. This is done
  thru PUBLIC variables defined in PluginProcessor.h. In the
  editor you use the processor object name to get the values.<br />
- `audioProcessor.Pedal_Gain`  
+ ```C++audioProcessor.Pedal_Gain```         
 
  A VST should have parameters. These are variables that get
  loaded, saved, and adjusted by the DAW. The magic of JUCE is 
@@ -105,18 +105,24 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
  it to work.
 
  A Slider control in the editor to adjust the value:  
-`juce::Slider jsP1_Gain;`  
+```C++juce::Slider jsP1_Gain;```  
 
 A Parameter Attachment to track the parameter in the editor:  
-`std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> ParAtt_Gain;  
-ParAtt_Gain  = std::make_unique <juce::AudioProcessorValueTreeState::SliderAttachment>(p.parameters, "gain", jsP1_Gain);`  
+```C++
+std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> ParAtt_Gain;  
+ParAtt_Gain  = std::make_unique <juce::AudioProcessorValueTreeState::SliderAttachment>(p.parameters, "gain", jsP1_Gain);
+```
 
 A Value State Tree to store the parameters in the processor:  
-`juce::AudioProcessorValueTreeState parameters;`  
+```C++
+juce::AudioProcessorValueTreeState parameters;
+```  
 
 Parameter defintions in processor:  
-`parameters(*this, nullptr, "PARAMETERS", {
-   std::make_unique<juce::AudioParameterFloat>("gain","Gain", -1.0f, 1.0f, .0f),`  
+```C++
+parameters(*this, nullptr, "PARAMETERS", {
+   std::make_unique<juce::AudioParameterFloat>("gain","Gain", -1.0f, 1.0f, .0f),
+```
 
 Parameter Get/Set functions with this code:<br />
 ```C++
