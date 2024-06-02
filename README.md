@@ -16,7 +16,9 @@ DISCLAIMER
 ------------------------------------------------------------------  
 This VST was written in a very simple way. No object defs, etc. 
 Just simple code for people who are not programmers but want to 
-dabble in the magic of JUCE VSTs. It is amazing.
+dabble in the magic of JUCE VSTs. Dont look at the code as
+something to master. But a tool you can create with. You dont need
+to know how the hammer was made. Just use it. Let JUCE carry you.
        
 SUMMARY
 ------------------------------------------------------------------
