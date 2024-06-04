@@ -230,7 +230,7 @@ void MakoBiteAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 In this func you will:
 * Read the incoming audio from a buffer.
 * Modify that audio.
-* Copy you modified audio back into the buffer.
+* Copy your modified audio back into the buffer.  
 NOTE: Audio is a float between -1.0f and 1.0f. If the audio exceeds these limits, the audio engine will stop working.  
 
 Juce creates all of the needed code to get this function working. All you have to do is go to the inner for loop and add your code.  
