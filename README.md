@@ -78,8 +78,8 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
  ```C++
  tSThump = tanhf(tSThump * Pedal_Thump * 5.0f);
 ```  
- tanhf allows you to amplify a signal but keep the peak value
- between -1 and 1. Which are the limits needed for audio programming.
+ Tanhf allows you to amplify a signal but keep the peak value between -1 and 1. Which are the limits needed for audio programming.
+ This would be considered a soft clipping method in audio programming. It gradually distorts the signal.
 <br />
 <br />
 
@@ -158,7 +158,7 @@ Pedal_Thump = makoGetParmValue_float("thump");
 <br />
 
 # JUCE SLIDER CONTROL<br />
-First you need to define a slider object in teh editor.h file:  
+First you need to define a slider object in the editor.h file:  
 ```C++
 juce::Slider jsP1_Thump;
 ```
@@ -185,6 +185,35 @@ void MakoBiteAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
     }
 }
 ```
+<br />
+<br />
+
+# BACKGROUND IMAGE <br />
+The easiest way to punch up the look of your VST is to use a background image to add some cool graphics. In this app we set the 
+VST window size using:
+```C++
+ setSize (480, 260);
+```
+We then built a background image using this size definition.
+![Demo Image](docs/assets/makothump_back.png)<br />  
+To use this image we need to add it to the JUCE project in PROJUCER. Just drag and drop it into the FILE EXPLORER tab of the project.
+After saving, the image will be a part of your C++ project.
+
+To use it we need an image object in the editor.
+```C++
+juce::Image imgBack;
+```
+Then we need to point that object at our included image.
+```C++
+imgBack = juce::ImageCache::getFromMemory(BinaryData::makothump_back_png, BinaryData::makothump_back_pngSize);
+```
+We then modify the editor PAINT function so our background is drawn whenever it is needed. It should be drawn first so other things are drawn over it.
+```C++
+g.drawImageAt(imgBack, 0, 0);
+```
+That is all there is to it. One trick is to have your VST draw normally and then screenshot that. So you will have positions for all of the controls on screen.
+That way you dont need to guess.
+
 
  
  
