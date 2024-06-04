@@ -80,6 +80,8 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
 ```  
  tanhf allows you to amplify a signal but keep the peak value
  between -1 and 1. Which are the limits needed for audio programming.
+<br />
+<br />
 
  # BASIC JUCE OPERATION<br />
  ![Demo Image](docs/assets/jucesetup01.png)<br />
@@ -105,6 +107,7 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
 ```         
 <br />
 <br />
+
 # PARAMETERS<br />
  A VST should have parameters. These are variables that get
  loaded, saved, and adjusted by the DAW. The magic of JUCE is 
@@ -153,6 +156,7 @@ Pedal_Thump = makoGetParmValue_float("thump");
 ```
 <br />
 <br />
+
 # JUCE SLIDER CONTROL<br />
 First you need to define a slider object in teh editor.h file:  
 ```C++
