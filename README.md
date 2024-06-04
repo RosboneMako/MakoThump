@@ -215,7 +215,23 @@ g.drawImageAt(imgBack, 0, 0);
 That is all there is to it. One trick is to have your VST draw normally and then screenshot that. So you will have positions for all of the controls on screen.
 That way you dont need to guess.
 
+# WORKING WITH THE RAW AUDIO <br />
+Their are many functions built in to Juce that hide the work of dealing with audio. I like to have it all out in the open and I like to do stuff myself.
+This will be a benefit to others who want to do unorthodox things like I do.
 
+In the PROCESSOR there will be a function called processBlock. Juce creates this for you automatically. This is where all of the audio magic happens.
+This function is called continuously as fast as possible to handle incoming/outgoing audio. 
+```C++
+void MakoBiteAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+```
+In this func you will:
+* Read the incoming audio from a buffer.
+* Modify that audio.
+* Copy you modified audio back into the buffer.
+NOTE: Audio is a float between -1.0f and 1.0f. If the audio exceeds these limits, the audio engine will stop working.  
+
+
+ 
  
  
  
