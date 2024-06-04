@@ -347,7 +347,15 @@ must be made for each channel of audio. That is why there are arrays in the tp_f
 We dont have a seperate filter, we just have seperate past sample buffers. One for each channel.
 If you are making a 5 channel movie processor you would need to increase array sizes to 5 for example.
 
+There are three included filter functions: Low Pass, High Pass, and Band Pass.
+It is beyond the scope here to fully discuss these. 
 
+High and Low pass filters only need a cutoff frequency (Fc). This is the point the filter will begin to work.
+A low pass set to 1 Khz will let all signals thru below 1 kHz. 1 kHz and above the signal will start to be attenuated (lowered).
+
+A band pass filter is basically a low pass and high pass combined. So it attenuates stuff above and below the cutoff frequency.
+How much gets attenuated is defined by the filter width (Q). Smaller Q = lets more frequencies thru. Larger Q = affects more frequencies.
+In guitar terms, a large Q value will make your signal sound like it is going thru a Wah Wah pedal.
 
 
 
