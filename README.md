@@ -220,7 +220,8 @@ Their are many functions built in to Juce that hide the work of dealing with aud
 This will be a benefit to others who want to do unorthodox things like I do.
 
 In the PROCESSOR there will be a function called processBlock. Juce creates this for you automatically. This is where all of the audio magic happens.
-This function is called continuously as fast as possible to handle incoming/outgoing audio. 
+This function is called continuously as fast as possible to handle incoming/outgoing audio. You should normally only deal with small numbers of samples
+if the DAW is running properly.
 ```C++
 void MakoBiteAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 ```
@@ -230,6 +231,13 @@ In this func you will:
 * Copy you modified audio back into the buffer.
 NOTE: Audio is a float between -1.0f and 1.0f. If the audio exceeds these limits, the audio engine will stop working.  
 
+Juce creates all of the needed code to get this function working. All you have to do is go to the inner for loop and add your code.  
+```C++
+//R1.01 All of OUR work starts here.
+tS = buffer.getSample(channel, samp);  //R1.00 Get the current sample and put it in tS. 
+tS = Thump_ProcessAudio(tS, channel);  //R1.00 Apply our OD to the sample. 
+channelData[samp] = tS;                //R1.00 Write our modified sample back into the sample buffer.
+```
 
  
  
