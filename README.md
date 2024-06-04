@@ -194,7 +194,8 @@ VST window size using:
 ```C++
  setSize (480, 260);
 ```
-We then built a background image using this size definition.
+We then built a background image using this size definition.<br />
+
 ![Demo Image](docs/assets/makothump_back.png)<br />  
 To use this image we need to add it to the JUCE project in PROJUCER. Just drag and drop it into the FILE EXPLORER tab of the project.
 After saving, the image will be a part of your C++ project.
