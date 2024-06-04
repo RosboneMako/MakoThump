@@ -104,6 +104,7 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
  audioProcessor.Pedal_Gain
 ```         
 
+# PARAMETERS<br />
  A VST should have parameters. These are variables that get
  loaded, saved, and adjusted by the DAW. The magic of JUCE is 
  streamling that process. But you need several things defined for
@@ -143,6 +144,40 @@ std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
 if (xmlState.get() != nullptr)  
     if (xmlState->hasTagName(parameters.state.getType()))    
         parameters.replaceState(juce::ValueTree::fromXml(*xmlState));  
+```
+
+In some instances you may need to pull a parameter value. This can be done with:  
+```
+Pedal_Thump = makoGetParmValue_float("thump");
+```
+
+# JUCE SLIDER CONTROL<br />
+First you need to define a slider object in teh editor.h file:  
+```
+juce::Slider jsP1_Thump;
+```
+Then you need to define some stuff about the object in editor.cpp:  
+```
+ jsP1_Thump.setRange(0.0, 1.0, .01);
+ jsP1_Thump.setValue(audioProcessor.Pedal_Thump);
+ jsP1_Thump.addListener(this);
+ addAndMakeVisible(jsP1_Thump);
+```
+The next step is to define where the slider will be on the UI. This is usually in the RESIZED function:  
+```
+jsP1_Thump.setBounds(100, 15, 80, 100);
+```
+Now we need to intercept changes to the slider so we can track/update our variables/parameters. Here we are setting
+a variable called SettingsChanged to flag the processor that it needs to recalcuate some things.  
+```
+void MakoBiteAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
+{    
+    if (slider == &jsP1_Thump)
+    {
+        audioProcessor.Pedal_Thump = float(jsP1_Thump.getValue());
+        audioProcessor.SettingsChanged = true;  //R1.00 We need to update settings in processor.
+    }
+}
 ```
 
  
