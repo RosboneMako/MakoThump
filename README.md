@@ -82,7 +82,7 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
  between -1 and 1. Which are the limits needed for audio programming.
 
  # BASIC JUCE OPERATION<br />
- ![Demo Image](docs/assets/jucesetup01.png)
+ ![Demo Image](docs/assets/jucesetup01.png)<br />
  This app is setup in JUCE by creating a basic Plug-In. Once 
  created four files are placed in the SOURCE directory for the 
  project. Replace those four files with the files from this app
@@ -103,7 +103,8 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
  ```C++
  audioProcessor.Pedal_Gain
 ```         
-
+<br />
+<br />
 # PARAMETERS<br />
  A VST should have parameters. These are variables that get
  loaded, saved, and adjusted by the DAW. The magic of JUCE is 
@@ -150,7 +151,8 @@ In some instances you may need to pull a parameter value. This can be done with:
 ```C++
 Pedal_Thump = makoGetParmValue_float("thump");
 ```
-
+<br />
+<br />
 # JUCE SLIDER CONTROL<br />
 First you need to define a slider object in teh editor.h file:  
 ```C++
