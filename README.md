@@ -341,10 +341,10 @@ Now when we want to apply this to a sample we simply call:
 ```C++
 float tSThump = Filter_Calc_BiQuad(tSample, channel, &makoF_Thump);
 ```
-NOTE: These filters work by multiplying past samples. So they store past samples. So a filter
-must be made for each channel of audio. That is why there arrays in the tp_filter structure definition.
-we dont have a seperate filter, se juct have seperate past sample buffers. If you are making a 5 channel 
-movie processor you would need to increase array sizes to 5 for example.
+NOTE: These filters work by multiplying past samples. So they store past samples. A filter
+must be made for each channel of audio. That is why there are arrays in the tp_filter structure definition.
+We dont have a seperate filter, we just have seperate past sample buffers. One for each channel.
+If you are making a 5 channel movie processor you would need to increase array sizes to 5 for example.
 
 
 
