@@ -81,7 +81,7 @@ Filter_LP_Coeffs(Pedal_LP, &makoF_LP);
  tanhf allows you to amplify a signal but keep the peak value
  between -1 and 1. Which are the limits needed for audio programming.
 
- BASIC JUCE OPERATION<br />
+ # BASIC JUCE OPERATION<br />
  ![Demo Image](docs/assets/jucesetup01.png)
  This app is setup in JUCE by creating a basic Plug-In. Once 
  created four files are placed in the SOURCE directory for the 
@@ -147,29 +147,29 @@ if (xmlState.get() != nullptr)
 ```
 
 In some instances you may need to pull a parameter value. This can be done with:  
-```
+```C++
 Pedal_Thump = makoGetParmValue_float("thump");
 ```
 
 # JUCE SLIDER CONTROL<br />
 First you need to define a slider object in teh editor.h file:  
-```
+```C++
 juce::Slider jsP1_Thump;
 ```
 Then you need to define some stuff about the object in editor.cpp:  
-```
+```C++
  jsP1_Thump.setRange(0.0, 1.0, .01);
  jsP1_Thump.setValue(audioProcessor.Pedal_Thump);
  jsP1_Thump.addListener(this);
  addAndMakeVisible(jsP1_Thump);
 ```
 The next step is to define where the slider will be on the UI. This is usually in the RESIZED function:  
-```
+```C++
 jsP1_Thump.setBounds(100, 15, 80, 100);
 ```
 Now we need to intercept changes to the slider so we can track/update our variables/parameters. Here we are setting
 a variable called SettingsChanged to flag the processor that it needs to recalcuate some things.  
-```
+```C++
 void MakoBiteAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
 {    
     if (slider == &jsP1_Thump)
