@@ -214,6 +214,8 @@ g.drawImageAt(imgBack, 0, 0);
 ```
 That is all there is to it. One trick is to have your VST draw normally and then screenshot that. So you will have positions for all of the controls on screen.
 That way you dont need to guess.
+<br />
+<br />
 
 # WORKING WITH THE RAW AUDIO <br />
 Their are many functions built in to Juce that hide the work of dealing with audio. I like to have it all out in the open and I like to do stuff myself.
@@ -238,6 +240,115 @@ tS = buffer.getSample(channel, samp);  //R1.00 Get the current sample and put it
 tS = Thump_ProcessAudio(tS, channel);  //R1.00 Apply our OD to the sample. 
 channelData[samp] = tS;                //R1.00 Write our modified sample back into the sample buffer.
 ```
+
+The function that does all of our work is Thump_ProcessAudio. It receives a single sample and the channel number it belongs to.
+We then apply our filters and gain adjustments and pass the sample out. the entire function is:
+```C++
+float MakoBiteAudioProcessor::Thump_ProcessAudio(float tSample, int channel)
+{
+    //R1.00 This is our function we created to BRING THE THUMP!!!
+
+    //R1.00 Make a copy of our incoming signal to modify. Just good practice.
+    float tS = tSample;
+    
+    //R1.00 Calc our thumpy signal by applying a 150 Hz Low Pass filter.
+    //R1.00 A parameter could be added to change this filters freq.
+    //R1.00 150Hz works well generically so we have it fixed at 150.
+    float tSThump = Filter_Calc_BiQuad(tSample, channel, &makoF_Thump);
+    
+    //R1.00 Distort the Low Pass Signal to emulate speaker compression and cabinet thump.
+    //R1.00 Pedal_Thump is both volume and distortion as we drive into compression.
+    //R1.00 Could be optimised by applying gain and distortion separately.
+    tSThump = tanhf(tSThump * Pedal_Thump * 5.0f);                       
+
+    //R1.00 Add the new Thump to the original signal. 
+    //R1.00 Do before any EQ to reduce phase issues from filters shifting the sample phase.
+    tS = (tS + tSThump);
+
+    //1.00 Apply the Low Pass filter to reduce Fizz in signal. Dont do LP if set to max.
+    if (Pedal_LP < 10000) tS = Filter_Calc_BiQuad(tS, channel, &makoF_LP);
+
+    //R1.00 Apply EQ. Try to not to calc, if not needed, to save CPU cycles.
+    if (Pedal_Band1 != .0f) tS = Filter_Calc_BiQuad(tS, channel, &makoF_Band1);
+    if (Pedal_Band2 != .0f) tS = Filter_Calc_BiQuad(tS, channel, &makoF_Band2);
+    if (Pedal_Band3 != .0f) tS = Filter_Calc_BiQuad(tS, channel, &makoF_Band3);
+    if (Pedal_Band4 != .0f) tS = Filter_Calc_BiQuad(tS, channel, &makoF_Band4);
+    if (Pedal_Band5 != .0f) tS = Filter_Calc_BiQuad(tS, channel, &makoF_Band5);
+        
+    //R1.00 Volume/Gain adjust.
+    tS = tS * (Pedal_Gain + 1.0f) * 2.0f;
+
+    //R1.00 It is possible our code can drive the volume past the clipping range.
+    //R1.00 Clip the signal to -1 and +1 or VST will stop working.
+    //R1.00 Should set a var here to let the user know they are clipping.
+    if (.999f < tS) tS = .999f;
+    if (tS < -.999f) tS = -.999f;
+
+    return tS;
+}
+```
+<br />
+<br />
+
+# AUDIO FILTERS<br />  
+This is a very large part of audio programming. There are many different types of filters out there. For our case, we dont need to understand
+the intimate details of how it works. We just need to use it as a tool. These functions do complicated math on a set of coefficients. The coefficients
+define what the filter will do in the frequency domain.
+
+The first step is to define the filter variables and functions:
+```C++
+//R1.00 OUR FILTER VARIABLES
+struct tp_coeffs {
+    float a0;
+    float a1;
+    float a2;
+    float b1;
+    float b2;
+    float c0;
+    float d0;
+};
+
+struct tp_filter {
+    float a0;
+    float a1;
+    float a2;
+    float b1;
+    float b2;
+    float c0;
+    float d0;
+    float xn0[2];
+    float xn1[2];
+    float xn2[2];
+    float yn1[2];
+    float yn2[2];
+    float offset[2];
+};
+
+//R1.00 FILTERS
+float Filter_Calc_BiQuad(float tSample, int channel, tp_filter* fn);
+void Filter_BP_Coeffs(float Gain_dB, float Fc, float Q, tp_filter* fn);
+void Filter_LP_Coeffs(float fc, tp_filter* fn);
+void Filter_HP_Coeffs(float fc, tp_filter* fn);
+
+//R1.00 The Mako OD pedal
+tp_filter makoF_Thump = {};
+```
+Once we have variables/functions we can define our filters coefficients:  
+```C++
+Filter_LP_Coeffs(150.0f, &makoF_Thump);
+```
+Now when we want to apply this to a sample we simply call:
+```C++
+float tSThump = Filter_Calc_BiQuad(tSample, channel, &makoF_Thump);
+```
+NOTE: These filters work by multiplying past samples. So they store past samples. So a filter
+must be made for each channel of audio. That is why there arrays in the tp_filter structure definition.
+we dont have a seperate filter, se juct have seperate past sample buffers. If you are making a 5 channel 
+movie processor you would need to increase array sizes to 5 for example.
+
+
+
+
 
  
  
