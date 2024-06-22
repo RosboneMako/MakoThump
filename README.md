@@ -1,6 +1,6 @@
 # MakoThump
-* JUCE VST3 Guitar EQ.
-* Demo JUCE program.
+* JUCE VST Guitar EQ.
+* Demo JUCE program. sample code.
 * Tested on Windows only.
 * Written in Visual C++ 2022.
 * Written for new programmers, not complicated.
